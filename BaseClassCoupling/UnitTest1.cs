@@ -16,11 +16,12 @@ namespace BaseClassCoupling
                 //Console.WriteLine("your StartDate should be :{0}", DateTime.Today.AddDays(365/2*-1));
                 StartWorkingDate = new DateTime(2017, 7, 29)
             };
-
+            
             var actual = lessThanOneYearEmployee.GetYearlyBonus();
             Assert.AreEqual(600, actual);
         }
     }
+
 
     public abstract class Employee
     {
@@ -48,8 +49,13 @@ namespace BaseClassCoupling
 
         private double WorkingYear()
         {
-            var year = (DateTime.Now - StartWorkingDate).TotalDays / 365;
+            var year = (GetNow() - StartWorkingDate).TotalDays / 365;
             return year > 1 ? 1 : year;
+        }
+
+        internal virtual DateTime GetNow()
+        {
+            return DateTime.Now;
         }
     }
 
@@ -61,7 +67,7 @@ namespace BaseClassCoupling
             throw new NotImplementedException();
         }
     }
-
+    
     public class SalaryRepo
     {
         internal static decimal Get(int id)
